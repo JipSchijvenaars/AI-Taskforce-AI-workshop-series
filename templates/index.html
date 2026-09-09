@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% if error %}
+    <p class="error">{{ error }}</p>
+  {% endif %}
+
+  <form method="post" action="{{ url_for('analyze') }}" class="search">
+    <label>
+      Address
+      <input type="text" name="address" value="{{ address or '' }}"
+             placeholder="e.g. Turfmarkt 99, Den Haag" autofocus required>
+    </label>
+
+    <label>
+      Category
+      <select name="category" required>
+        <option value="" disabled {{ 'selected' if not category }}>Choose one…</option>
+        {% for value, label in categories.items() %}
+          <option value="{{ value }}" {{ 'selected' if category == value }}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <button type="submit">Search within 1 km</button>
+  </form>
+{% endblock %}

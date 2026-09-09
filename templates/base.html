@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}HORECA Competition Lens{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main>
+    <h1><a href="{{ url_for('index') }}">HORECA Competition Lens</a></h1>
+    <p class="tagline">
+      A quick, indicative look at nearby competition using OpenStreetMap data.
+    </p>
+    {% block content %}{% endblock %}
+    <footer>
+      Data &copy; OpenStreetMap contributors. Indicative only &mdash; validate on
+      the ground before making a location decision.
+    </footer>
+  </main>
+</body>
+</html>

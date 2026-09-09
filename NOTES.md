@@ -39,6 +39,19 @@ raw material for the reflection in `README.md`.
 
 ## Phase 3 - Flask UI
 
+- `run_analysis()` in `analysis.py` is the single orchestration point (geocode ->
+  find_venues -> sort -> top 5) and returns a plain dict; both the UI and the
+  phase-4 report consume that same dict, so their numbers can't drift apart.
+- Routes: `GET /`, `POST /analyze`, `POST /report` (stub until phase 4).
+  Errors from the `osm` module are caught and shown as a banner with a sensible
+  HTTP status (404 address not found, 502 upstream failure).
+- Verified via Flask's test client: Den Haag/cafe = 5 sorted rows; Rolde =
+  exactly 5 (no banner); Anloo/restaurant = 2 with "n = 2" banner; Diever/hotel
+  = 0 with "no venues" message; nonsense address = 404 banner; no category = 400.
+- Finding thin test locations is fiddly: many small-village addresses don't
+  geocode with a made-up house number. Working sparse cases: "Brink 1, Anloo"
+  + restaurant (2), "Brink 1, Diever" + hotel (0).
+
 ## Phase 4 - Quarto report + rule-based assessment
 
 ## Phase 5 - README + final test

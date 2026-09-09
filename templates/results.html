@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% if notice %}
+    <p class="notice">{{ notice }}</p>
+  {% endif %}
+
+  <section class="summary">
+    <dl>
+      <dt>Address entered</dt><dd>{{ a.address_input }}</dd>
+      <dt>Resolved to</dt><dd>{{ a.address_resolved }}</dd>
+      <dt>Category</dt><dd>{{ a.category_label }}</dd>
+      <dt>Search radius</dt><dd>{{ a.radius_m }} m (1 km)</dd>
+      <dt>Total mapped {{ a.category_label|lower }} venues within 1 km</dt>
+      <dd>{{ a.total_within_radius }}</dd>
+      <dt>Distance to nearest</dt>
+      <dd>{{ '~' ~ a.closest_distance_m|meters if a.closest_distance_m is not none else 'none found' }}</dd>
+    </dl>
+  </section>
+
+  {% if a.total_within_radius == 0 %}
+    <p class="warn">No mapped {{ a.category_label|lower }} venues were found within 1 km.</p>
+  {% elif a.fewer_than_5 %}
+    <p class="warn">
+      Fewer than 5 mapped {{ a.category_label|lower }} venues found within 1 km
+      (n = {{ a.total_within_radius }}). Showing all of them.
+    </p>
+  {% endif %}
+
+  {% if a.matches %}
+    <table>
+      <thead>
+        <tr><th>#</th><th>Name</th><th>Type</th><th>Website</th><th>Distance</th></tr>
+      </thead>
+      <tbody>
+        {% for m in a.matches %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ m.name }}</td>
+            <td>{{ m.kind }}</td>
+            <td>
+              {% if m.website %}
+                <a href="{{ m.website }}" target="_blank" rel="noopener">{{ m.website }}</a>
+              {% else %}&mdash;{% endif %}
+            </td>
+            <td>{{ m.distance_m|meters }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+
+  <form method="post" action="{{ url_for('report') }}" class="report">
+    <input type="hidden" name="address" value="{{ a.address_input }}">
+    <input type="hidden" name="category" value="{{ a.category }}">
+    <button type="submit">Generate PDF report</button>
+  </form>
+
+  <p><a href="{{ url_for('index') }}">&larr; New search</a></p>
+{% endblock %}
