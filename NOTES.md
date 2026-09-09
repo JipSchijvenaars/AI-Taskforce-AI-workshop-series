@@ -54,4 +54,21 @@ raw material for the reflection in `README.md`.
 
 ## Phase 4 - Quarto report + rule-based assessment
 
+- `assess()` in `analysis.py` is a plain if/elif on the count (0-1 / 2-4 / 5+)
+  plus a `< 250 m` proximity note - exactly the assignment's thresholds. It
+  returns a short paragraph that quotes the actual numbers, so nothing in the
+  text is un-sourced. `run_analysis()` stores it as a dict.
+- `report.py` builds the whole report as a Markdown string in Python, writes
+  `report/_generated.qmd` (no code chunks), and runs
+  `quarto render --to typst`. Typst is bundled with Quarto, so no LaTeX.
+- Bug found: with `--output name.pdf`, Quarto ignores the project
+  `output-dir` and writes the PDF next to the source. Fix: dropped the
+  `project:` block from `_quarto.yml` and move the file into `output/` from
+  Python (`Path.replace`).
+- Changed distance formatting from "nearest 10 m" to whole metres - three
+  rows all showing "70 m" looked like a bug.
+- Verified: standalone `python report.py` from the fixture, and end-to-end
+  `POST /report` returns `application/pdf`. Levels checked: 0 -> lower,
+  2 -> moderate, 5 -> higher, all with the right proximity note.
+
 ## Phase 5 - README + final test

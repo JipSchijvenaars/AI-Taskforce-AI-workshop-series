@@ -1,0 +1,54 @@
+{
+  "address_input": "Turfmarkt 99, Den Haag",
+  "address_resolved": "Universiteit Leiden Locatie Wijnhaven, 99, Turfmarkt, Museumkwartier, Centrum, Den Haag, Zuid-Holland, Nederland, 2511 DP, Nederland",
+  "category": "restaurant",
+  "category_label": "Restaurant",
+  "radius_m": 1000,
+  "generated_at": "2026-09-09T19:18:54",
+  "total_within_radius": 284,
+  "closest_distance_m": 67.28965651683247,
+  "fewer_than_5": false,
+  "matches": [
+    {
+      "name": "Burrata",
+      "kind": "Restaurant",
+      "osm_type": "node",
+      "website": "https://www.pizzaburrata.nl/turfmarkt/en/",
+      "distance_m": 67.28965651683247
+    },
+    {
+      "name": "Poké perfect",
+      "kind": "Restaurant",
+      "osm_type": "node",
+      "website": null,
+      "distance_m": 71.43134331970265
+    },
+    {
+      "name": "D'Javas",
+      "kind": "Restaurant",
+      "osm_type": "node",
+      "website": "https://www.djavas.nl",
+      "distance_m": 74.69138604026861
+    },
+    {
+      "name": "Vulcan",
+      "kind": "Restaurant",
+      "osm_type": "node",
+      "website": "https://vulcanrestaurant.nl/",
+      "distance_m": 79.64323233462257
+    },
+    {
+      "name": "Rozey",
+      "kind": "Restaurant",
+      "osm_type": "node",
+      "website": "https://rozey.nl/",
+      "distance_m": 81.33337656861399
+    }
+  ],
+  "assessment": {
+    "level": "higher",
+    "summary": "Indicative competition: higher. The OpenStreetMap query found 284 mapped restaurant venue(s) within 1 km of the address; the nearest is about 67 m away. The area is already served by many direct competitors. Validate with local field research before making a location decision.",
+    "proximity_note": "A mapped restaurant venue sits about 67 m away - a direct competitor is very nearby."
+  },
+  "ai_narrative": null
+}

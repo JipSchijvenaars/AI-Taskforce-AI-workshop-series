@@ -15,9 +15,7 @@ output/*
 
 # Quarto build artefacts
 report/.quarto/
-report/report-*.qmd
-report/report-*.json
-report/*_files/
+report/_generated.qmd
 
 # macOS
 .DS_Store

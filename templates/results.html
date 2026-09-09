@@ -50,6 +50,16 @@
     </table>
   {% endif %}
 
+  {% if a.assessment %}
+    <section class="assessment">
+      <h2>Indicative competition assessment</h2>
+      <p>{{ a.assessment.summary }}</p>
+      {% if a.assessment.proximity_note %}
+        <p class="warn">{{ a.assessment.proximity_note }}</p>
+      {% endif %}
+    </section>
+  {% endif %}
+
   <form method="post" action="{{ url_for('report') }}" class="report">
     <input type="hidden" name="address" value="{{ a.address_input }}">
     <input type="hidden" name="category" value="{{ a.category }}">

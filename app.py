@@ -8,10 +8,13 @@ Routes:
 
 from __future__ import annotations
 
-from flask import Flask, render_template, request
+import subprocess
+
+from flask import Flask, render_template, request, send_file
 
 from analysis import meters, run_analysis
 from osm import CATEGORY_LABELS, AddressNotFound, GeocodingError, OverpassError
+from report import generate_report
 
 app = Flask(__name__)
 app.jinja_env.filters["meters"] = meters
@@ -46,17 +49,29 @@ def analyze():
 
 @app.post("/report")
 def report():
-    # Wired in phase 4. For now, re-run the analysis and show the results again
-    # so the button does something sensible.
     address = request.form.get("address", "").strip()
     category = request.form.get("category", "")
+    if not address or category not in CATEGORY_LABELS:
+        return _form_error("Please run a search first.", address, category, 400)
+
     try:
         analysis = run_analysis(address, category)
+        pdf_path = generate_report(analysis)
     except (AddressNotFound, GeocodingError, OverpassError) as exc:
         return _form_error(str(exc), address, category, 502)
-    return render_template(
-        "results.html", a=analysis, notice="PDF report generation arrives in phase 4."
-    )
+    except FileNotFoundError:
+        return _form_error(
+            "Quarto is not installed or not on PATH - run 'brew install quarto'.",
+            address, category, 500,
+        )
+    except subprocess.CalledProcessError as exc:
+        app.logger.error("quarto render failed:\n%s", exc.stderr)
+        return _form_error(
+            "Report rendering failed. Check the server log for Quarto output.",
+            address, category, 500,
+        )
+
+    return send_file(pdf_path, as_attachment=True, download_name=pdf_path.name)
 
 
 def _form_error(message: str, address: str, category: str, status: int):
