@@ -1,0 +1,15 @@
+project:
+  output-dir: ../output
+
+format:
+  typst:
+    papersize: a4
+    margin:
+      x: 2.5cm
+      y: 2.5cm
+    fontsize: 11pt
+    toc: false
+
+execute:
+  echo: false
+  warning: false

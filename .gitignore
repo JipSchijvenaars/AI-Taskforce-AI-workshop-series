@@ -1,0 +1,23 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Secrets / local config
+.env
+
+# HTTP cache (OpenStreetMap responses)
+.cache/
+
+# Generated reports (keep the folder, not its contents)
+output/*
+!output/.gitkeep
+
+# Quarto build artefacts
+report/.quarto/
+report/report-*.qmd
+report/report-*.json
+report/*_files/
+
+# macOS
+.DS_Store
