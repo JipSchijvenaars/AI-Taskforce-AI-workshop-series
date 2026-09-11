@@ -27,19 +27,36 @@ locally, no deployment.
 ## Setup
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-brew install quarto        # macOS; needs Quarto >= 1.4 (bundled Typst)
-quarto check               # should report Typst OK
+python -m venv .venv               # create a project-local virtual environment in .venv/
+source .venv/bin/activate          # activate it in this terminal (prompt shows "(.venv)")
+pip install -r requirements.txt    # install Flask, requests, requests-cache, python-dotenv into it
+brew install quarto                # macOS; installs Quarto >= 1.4 (bundled Typst, no LaTeX needed)
+quarto check                       # sanity check - should report Typst OK
 ```
+
+`source .venv/bin/activate` only affects the current terminal tab/session - if you open
+a new one, run it again (or use the VS Code steps below, which do this for you).
+
+### In VS Code
+
+1. **File -> Open Folder...** and pick this project folder.
+2. **Cmd+Shift+P -> "Python: Select Interpreter"** -> pick the one under `.venv`.
+   VS Code then activates that environment automatically in any terminal you open
+   inside it, so you can skip the manual `source .venv/bin/activate` step.
+3. **Terminal -> New Terminal**, then run the `pip install` / `flask` commands below.
 
 ## Run
 
 ```bash
 flask --app app run --debug
-# open http://127.0.0.1:5000
 ```
+
+This starts a local web server. Open **http://127.0.0.1:5000** in a browser.
+`--debug` auto-reloads the server when you edit a file, and shows full error
+pages if something crashes.
+
+**To stop it**: click into that terminal and press **Ctrl+C**. The process
+also stops automatically if you close the terminal or VS Code.
 
 ## Project layout
 
